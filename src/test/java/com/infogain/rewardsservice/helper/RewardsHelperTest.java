@@ -1,34 +1,29 @@
 package com.infogain.rewardsservice.helper;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class RewardsHelperTest {
-    @Test
-    public void testCalculatePoints_amount_overHundred() {
-        assertEquals(90, RewardsHelper.calculatePoints(new BigDecimal(120)));
-    }
 
-    @Test
-    public void testCalculatePoints_amount_equalsHundred() {
-        assertEquals(50, RewardsHelper.calculatePoints(new BigDecimal(100)));
+    @ParameterizedTest
+    @MethodSource("rewardsAndAmountsContentProvider")
+    public void testCalculatePoints(int expectedPoints, BigDecimal amount){
+        assertEquals(expectedPoints, RewardsHelper.calculatePoints(amount));
     }
-
-    @Test
-    public void testCalculatePoints_amount_lessThanHundred() {
-        assertEquals(20, RewardsHelper.calculatePoints(new BigDecimal(70)));
-    }
-
-    @Test
-    public void testCalculatePoints_amount_equalsFifty() {
-        assertEquals(0, RewardsHelper.calculatePoints(new BigDecimal(50)));
-    }
-
-    @Test
-    public void testCalculatePoints_amount_lessThanFifty() {
-        assertEquals(0, RewardsHelper.calculatePoints(new BigDecimal(20)));
+    static Stream<Arguments> rewardsAndAmountsContentProvider() {
+        return Stream.of(
+                arguments(90, new BigDecimal(120)),
+                arguments(50, new BigDecimal(100)),
+                arguments(20, new BigDecimal(70)),
+                arguments(0, new BigDecimal(50)),
+                arguments(0, new BigDecimal(20))
+        );
     }
 }
