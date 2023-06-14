@@ -1,12 +1,12 @@
 
-# Rewards APIs
+# Rewards service APIs
 
 ## Build the application
 
 ### Setup
 Please install the following tools on your local machine:
 - Java 17
-- maven 3
+- maven 3.x.x+
 
 ### Setup
 Pull the source code on your local repository, then run the application with:
